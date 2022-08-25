@@ -91,7 +91,7 @@ The last parameter is the guidance_scale. It is a way to increase the adherence 
 
 ### Screenshot ###
 
-![Example image](https://github.com/torresflo/Tag-Machine/blob/main/examples/Example1.png)
+![Example image](https://github.com/torresflo/Picture-Machine/blob/main/examples/Example1.png)
 
 ## Contributing
 
