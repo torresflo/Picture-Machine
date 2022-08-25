@@ -38,7 +38,7 @@ class QGeneratedImageLabel(QClickableLabel):
     @QtCore.Slot()
     def onClicked(self):
         dir = QtCore.QDir.homePath()
-        filename = QtWidgets.QFileDialog.getSaveFileName(self, "Save image...", dir, "Images (*.png, *jpg)")
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, "Save image...", dir, "Images (*.png)")
         if filename[0]:
-            self.pixmap().toImage().save(filename[0])
+            self.pixmap().toImage().save(filename[0], "PNG")
         
