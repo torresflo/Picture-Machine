@@ -62,7 +62,13 @@ pip install scipy ftfy
 
 ### Installation
 
-Follow the instructions above then clone the repo (`git clone https:://github.com/torresflo/Picture-Machine.git`). You can now run `main.py`.
+Follow the instructions above then clone the repo (`git clone https:://github.com/torresflo/Picture-Machine.git`). 
+
+You must have an access token to retrieve and use the generation model.
+To do that, you need to create an account on the <a href="https://huggingface.co/">Hugging face website</a>.
+When it is done, on your profile, just create an access token (in read mode) and put it in a file named `accessToken.txt` next to `main.py`. This will allows the software to download the model on your machine to run it.
+
+You can now run `main.py`.
 
 ## Usage
 
