@@ -11,9 +11,10 @@ class ImageGenerator:
             self.m_pipeline = StableDiffusionPipeline.from_pretrained(self.m_modelID, torch_dtype=torch.float16, revision="fp16", use_auth_token=self.m_accessToken)
             self.m_pipeline = self.m_pipeline.to(self.m_device)
 
-    def generateImage(self, prompt, width=512, height=512, numInferenceSteps=50, guidanceScale=7.5):
+    def generateImage(self, prompt, width=512, height=512, numInferenceSteps=50, guidanceScale=7.5, seed=0):
+            generator = torch.Generator("cuda").manual_seed(seed)
             with autocast("cuda"):
-                image = self.m_pipeline(prompt, height=height, widht=width, num_inference_steps=numInferenceSteps, guidance_scale=guidanceScale)["sample"][0]
+                image = self.m_pipeline(prompt, height=height, widht=width, num_inference_steps=numInferenceSteps, guidance_scale=guidanceScale, generator=generator)["sample"][0]
             return image
 
         

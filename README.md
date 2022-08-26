@@ -27,7 +27,7 @@
 
 ### Prerequisites and dependencies
 
-This repository is tested on Python 3.7+ and PyTorch LTS 1.8.2. It works only Nvidia graphics cards and CUDA should be installed.
+This repository is tested on Python 3.7+ and PyTorch LTS 1.8.2. It works only on Nvidia graphics cards and CUDA should be installed.
 
 You should install Picture Machine in a [virtual environment](https://docs.python.org/3/library/venv.html). If you're unfamiliar with Python virtual environments, check out the [user guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/).
 First, create a virtual environment with the version of Python you're going to use and activate it.
@@ -79,7 +79,7 @@ Enter your prompt and then press "generate" to generate an image. You can then c
 
 ### Available parameters ###
 
-<u>Image size (width and height):</u>
+**Image size (width and height):**
 
 These are some recommendations to choose good image sizes:
 - Make sure height and width are both multiples of 8.
@@ -87,13 +87,17 @@ These are some recommendations to choose good image sizes:
 - Going over 512 in both directions will repeat image areas (global coherence is lost).
 - The best way to create non-square images is to use 512 in one dimension, and a value larger than that in the other one.
 
-<u>Iteration steps:</u>
+**Iteration steps:**
 
 You can change the number of inference steps using the this parameter. In general, results are better the more steps you use. Stable Diffusion, being one of the latest models, it works great with a relatively small number of steps (default is 50). If you want faster results you can use a smaller number here.
 
-<u>Guidance scale:</u>
+**Guidance scale:**
 
 The last parameter is the guidance_scale. It is a way to increase the adherence to your prompt as well as overall sample quality. In simple terms, it forces the generation to better match with your prompt. Numbers like 7 or 8.5 give good results, if you use a very large number the images might look good, but will be less diverse.
+
+**Seed:**
+
+If you want deterministic output you can set a random seed that will be given to the image generator. Every time you use the same seed and the same prompt, you will get the same image.
 
 ### Screenshot ###
 

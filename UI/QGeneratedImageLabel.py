@@ -14,18 +14,18 @@ class QGeneratedImageLabel(QClickableLabel):
     def loadPlaceholderImage(self):
         self.loadImageWithText("Try to generate an image, it will be displayed here!")
 
-    def loadWaitingImage(self):
-        self.loadImageWithText("Generation in progress, please wait...")
+    def loadWaitingImage(self, width=512, height=512):
+        self.loadImageWithText("Generation in progress, please wait...", width, height)
 
-    def loadImageWithText(self, text):
-        image = QtGui.QImage(512, 512, QtGui.QImage.Format_RGB32)
+    def loadImageWithText(self, text:str, width=512, height=512):
+        image = QtGui.QImage(width, height, QtGui.QImage.Format_RGB32)
         
         painter = QtGui.QPainter()
         painter.begin(image)
         font = painter.font()
         font.setPixelSize(14)
         painter.setFont(font)
-        imageRect = QtCore.QRectF(0, 0, 512, 512)
+        imageRect = QtCore.QRectF(0, 0, width, height)
         textOptions = QtGui.QTextOption(QtGui.Qt.AlignCenter | QtGui.Qt.AlignVCenter)
         backgroundColor = QtGui.QColor.fromRgb(200, 200, 200)
         painter.fillRect(imageRect, backgroundColor)
