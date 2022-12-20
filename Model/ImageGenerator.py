@@ -1,20 +1,20 @@
 import torch
-from diffusers import StableDiffusionPipeline
+from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
 from torch import autocast
 
 class ImageGenerator:
-    def __init__(self, accessToken:str):
-            self.m_accessToken = accessToken
-            self.m_modelID = "CompVis/stable-diffusion-v1-4"
+    def __init__(self):
+            self.m_modelID = "stabilityai/stable-diffusion-2-1"
             self.m_device = "cuda"
 
-            self.m_pipeline = StableDiffusionPipeline.from_pretrained(self.m_modelID, torch_dtype=torch.float16, revision="fp16", use_auth_token=self.m_accessToken)
+            self.m_pipeline = StableDiffusionPipeline.from_pretrained(self.m_modelID, revision="fp16", torch_dtype=torch.float16)
+            self.m_pipeline.scheduler = DPMSolverMultistepScheduler.from_config(self.m_pipeline.scheduler.config)
             self.m_pipeline = self.m_pipeline.to(self.m_device)
+            self.m_pipeline.enable_attention_slicing()
 
-    def generateImage(self, prompt, width=512, height=512, numInferenceSteps=50, guidanceScale=7.5, seed=0):
-            generator = torch.Generator("cuda").manual_seed(seed)
-            with autocast("cuda"):
-                image = self.m_pipeline(prompt, height=height, widht=width, num_inference_steps=numInferenceSteps, guidance_scale=guidanceScale, generator=generator)["sample"][0]
+    def generateImage(self, prompt, width=768, height=768, numInferenceSteps=50, guidanceScale=7.5, seed=0):
+            generator = torch.Generator(self.m_device).manual_seed(seed)
+            image = self.m_pipeline(prompt, height=height, width=width, num_inference_steps=numInferenceSteps, guidance_scale=guidanceScale, generator=generator).images[0]
             return image
 
         

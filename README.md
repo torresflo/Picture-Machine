@@ -64,16 +64,12 @@ pip install scipy ftfy
 
 Follow the instructions above then clone the repo (`git clone https:://github.com/torresflo/Picture-Machine.git`). 
 
-You must have an access token to retrieve and use the generation model.
-To do that, you need to create an account on the <a href="https://huggingface.co/">Hugging face website</a>.
-When it is done, on your profile, just create an access token (in read mode) and put it in a file named `accessToken.txt` next to `main.py`. This will allows the software to download the model on your machine to run it.
-
 You can now run `main.py`.
 
 ## Usage
 
 The image generation and if it is possible or not will depends of your hardware.
-This project has been tested on a Nvidia RTX 3070 with 8Gb of VRAM. With this hardware, it allows to generate images with a size of 512 x 512 pixels in around 10 seconds.
+This project has been tested on a Nvidia RTX 3070 with 8Gb of VRAM. With this hardware, it allows to generate images with a size of 768 x 768 pixels in around 15 seconds.
 
 Enter your prompt and then press "generate" to generate an image. You can then click on the image to save it if you want to.
 
@@ -83,9 +79,9 @@ Enter your prompt and then press "generate" to generate an image. You can then c
 
 These are some recommendations to choose good image sizes:
 - Make sure height and width are both multiples of 8.
-- Going below 512 might result in lower quality images.
-- Going over 512 in both directions will repeat image areas (global coherence is lost).
-- The best way to create non-square images is to use 512 in one dimension, and a value larger than that in the other one.
+- Going below 768 might result in lower quality images.
+- Going over 768 in both directions will repeat image areas (global coherence is lost).
+- The best way to create non-square images is to use 768 in one dimension, and a value larger than that in the other one.
 
 **Iteration steps:**
 

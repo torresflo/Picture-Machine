@@ -8,14 +8,15 @@ from Model.ImageGenerator import ImageGenerator
 from UI.QGeneratedImageLabel import QGeneratedImageLabel
 
 class MainWindow(QtWidgets.QWidget):
-    def __init__(self, accessToken:str, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.m_maxRandomNumber = 1000000000
         self.randomNumberGenerator = Random()
 
         #Model
         print("Loading Image Generator in your GPU, please wait...")
-        self.m_imageGenerator = ImageGenerator(accessToken)
+        self.m_imageGenerator = ImageGenerator()
 
         # Prompt Line
         self.m_promptLineEdit = QtWidgets.QLineEdit()
@@ -24,10 +25,10 @@ class MainWindow(QtWidgets.QWidget):
         # Image Size Widgets
         self.m_imageWidthSpinBox = QtWidgets.QSpinBox()
         self.m_imageWidthSpinBox.setRange(1, 2048)
-        self.m_imageWidthSpinBox.setValue(512)
+        self.m_imageWidthSpinBox.setValue(768)
         self.m_imageHeightSpinBox = QtWidgets.QSpinBox()
         self.m_imageHeightSpinBox.setRange(1, 2048)
-        self.m_imageHeightSpinBox.setValue(512)
+        self.m_imageHeightSpinBox.setValue(768)
 
         # Options Widgets
         self.m_numInferenceStepsSpinBox = QtWidgets.QSpinBox()
@@ -37,7 +38,7 @@ class MainWindow(QtWidgets.QWidget):
         self.m_guidanceScaleDoubleSpinBox.setRange(1.0, 10.0)
         self.m_guidanceScaleDoubleSpinBox.setValue(7.5)
         self.m_seedSpinBox = QtWidgets.QSpinBox()
-        self.m_seedSpinBox.setRange(0, 1000000000)
+        self.m_seedSpinBox.setRange(0, self.m_maxRandomNumber)
         self.m_seedSpinBox.setValue(self.generateRandomNumber())
         self.m_generateRandomNumberPushButton = QtWidgets.QPushButton("Generate random seed")
         self.m_generateRandomNumberPushButton.clicked.connect(self.onGenerateRandomNumberPushButtonClicked)
@@ -83,7 +84,7 @@ class MainWindow(QtWidgets.QWidget):
         self.setLayout(mainLayout)
 
     def generateRandomNumber(self):
-        return self.randomNumberGenerator.randint(0, 1000000000)
+        return self.randomNumberGenerator.randint(0, self.m_maxRandomNumber)
 
     @QtCore.Slot()
     def onGenerateRandomNumberPushButtonClicked(self):
