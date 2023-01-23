@@ -3,7 +3,7 @@ from random import Random
 from PySide6 import QtCore, QtWidgets, QtGui
 from PIL.ImageQt import ImageQt
 
-from Model.ImageGenerator import ImageGenerator
+from Model.ImageGenerator import ImageGenerator, PretrainedModelName
 
 from UI.QGeneratedImageLabel import QGeneratedImageLabel
 
@@ -15,13 +15,18 @@ class MainWindow(QtWidgets.QWidget):
         self.randomNumberGenerator = Random()
 
         #Model
-        print("Loading Image Generator in your GPU, please wait...")
         self.m_imageGenerator = ImageGenerator()
 
-        # Prompt Line
+        # Prompt Line & model combo box
         self.m_promptLineEdit = QtWidgets.QLineEdit()
         self.m_promptLineEdit.setPlaceholderText("Example: a photograph of an astronaut riding a horse")
-        
+        self.m_modelNameComboBox = QtWidgets.QComboBox()
+        for model in list(PretrainedModelName):    
+            self.m_modelNameComboBox.addItem(model.value, model)
+        self.m_promptLayout = QtWidgets.QHBoxLayout()
+        self.m_promptLayout.addWidget(self.m_promptLineEdit)
+        self.m_promptLayout.addWidget(self.m_modelNameComboBox)
+
         # Image Size Widgets
         self.m_imageWidthSpinBox = QtWidgets.QSpinBox()
         self.m_imageWidthSpinBox.setRange(1, 2048)
@@ -75,7 +80,7 @@ class MainWindow(QtWidgets.QWidget):
 
         # Main Layout
         mainLayout = QtWidgets.QVBoxLayout(self)
-        mainLayout.addWidget(self.m_promptLineEdit)
+        mainLayout.addLayout(self.m_promptLayout)
         mainLayout.addLayout(self.m_standardOptionsLayout)
         mainLayout.addWidget(self.m_seedGroupBox)
         mainLayout.addWidget(self.m_generateImagePushButton)
@@ -109,7 +114,8 @@ class MainWindow(QtWidgets.QWidget):
             self.repaint()
             QtWidgets.QApplication.processEvents()
 
-            image = self.m_imageGenerator.generateImage(prompt=promptString, width=width, height=height, numInferenceSteps=numInferenceSteps, guidanceScale=guidanceScale, seed=seed)
+            model = self.m_modelNameComboBox.currentData()
+            image = self.m_imageGenerator.generateImage(modelName=model, prompt=promptString, width=width, height=height, numInferenceSteps=numInferenceSteps, guidanceScale=guidanceScale, seed=seed)
             imageQt = ImageQt(image)
             self.m_resultImageLabel.setPixmap(QtGui.QPixmap.fromImage(imageQt))
         
