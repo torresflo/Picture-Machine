@@ -6,7 +6,9 @@ from enum import Enum
 class PretrainedModelName(Enum):
     StableDiffusion_2_1 = "stabilityai/stable-diffusion-2-1"
     DreamLike_PhotoReal_2_0 = "dreamlike-art/dreamlike-photoreal-2.0"
-    Anything_4_0= "andite/anything-v4.0"
+    OpenJourney_2 = "prompthero/openjourney-v2"
+    Epic_Diffusion = "johnslegers/epic-diffusion"
+    Anything_4_0 = "andite/anything-v4.0"
 
 class ImageGenerator:
     def __init__(self):
@@ -22,6 +24,9 @@ class ImageGenerator:
             self.m_pipeline.scheduler = DPMSolverMultistepScheduler.from_config(self.m_pipeline.scheduler.config)
             self.m_pipeline = self.m_pipeline.to(self.m_device)
             self.m_pipeline.enable_attention_slicing()
+
+            self.m_pipeline.safety_checker = None
+            self.m_pipeline.requires_safety_checker = False
 
     def generateImage(self, modelName: PretrainedModelName, prompt, width=768, height=768, numInferenceSteps=50, guidanceScale=7.5, seed=0):
         self.loadModel(modelName)
